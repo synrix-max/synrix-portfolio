@@ -1,0 +1,27 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <span>built with <a href="https://astro.build">astro</a> · hosted on gh-pages</span>
+  <span>© {year} de-ignis</span>
+</footer>
+
+<style>
+  .footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--border-sub);
+    font-size: 11px;
+    color: var(--text-ghost);
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer a {
+    color: #2a2a2a;
+    border-bottom: none;
+  }
+  .footer a:hover {
+    color: var(--text-dim);
+    border-bottom: none;
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+// Sidebar tree nav — collapsible sections driven by inline script.
+---
+
+<aside class="sidebar">
+  <div class="tree-section">
+    <div class="tree-label">pages</div>
+
+    <!-- blog -->
+    <button class="tree-parent" onclick="toggle('blog')" aria-expanded="false">
+      <span class="tree-arrow" id="arr-blog">▶</span>
+      <span>blog</span>
+    </button>
+    <div class="tree-group" id="blog" hidden>
+      <button class="tree-parent" onclick="toggle('devlogs')" aria-expanded="false">
+        <span class="tree-arrow" id="arr-devlogs">▶</span>
+        <span>devlogs</span>
+      </button>
+      <div class="tree-group" id="devlogs" hidden>
+        <a class="tree-item" href="/blog/devlogs/anomalyze-build">anomalyze build</a>
+        <a class="tree-item" href="/blog/devlogs/expo-eas-setup">expo eas setup</a>
+        <a class="tree-item" href="/blog/devlogs/supabase-deep-dive">supabase deep dive</a>
+      </div>
+
+      <button class="tree-parent" onclick="toggle('blog-notes')" aria-expanded="false">
+        <span class="tree-arrow" id="arr-blog-notes">▶</span>
+        <span>notes</span>
+      </button>
+      <div class="tree-group" id="blog-notes" hidden>
+        <a class="tree-item" href="/notes/langchain-learnings">langchain learnings</a>
+        <a class="tree-item" href="/notes/react-native-patterns">react native patterns</a>
+      </div>
+    </div>
+
+    <!-- journal -->
+    <button class="tree-parent" onclick="toggle('journal')" aria-expanded="false">
+      <span class="tree-arrow" id="arr-journal">▶</span>
+      <span>journal</span>
+    </button>
+    <div class="tree-group" id="journal" hidden>
+      <a class="tree-item" href="/journal/2026-05">26/05 — ships &amp; sparks</a>
+      <a class="tree-item" href="/journal/2025-12">25/12 — year end</a>
+    </div>
+
+    <a class="tree-item" href="/projects">projects</a>
+    <a class="tree-item" href="/art">art</a>
+    <a class="tree-item" href="/media">media</a>
+  </div>
+</aside>
+
+<style>
+  .sidebar { font-size: 12px; }
+
+  .tree-section { margin-bottom: 1.4rem; }
+
+  .tree-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .tree-item {
+    display: block;
+    padding: 0.18rem 0.5rem;
+    color: var(--text-mid);
+    border-bottom: none;
+    font-size: 12px;
+    border-radius: 2px;
+    transition: background 0.1s, color 0.1s;
+  }
+  .tree-item:hover {
+    color: var(--text);
+    background: var(--surface);
+    border-bottom: none;
+  }
+
+  .tree-group {
+    margin-left: 1rem;
+    margin-top: 0.15rem;
+    border-left: 1px solid #1f1f1f;
+    padding-left: 0.6rem;
+  }
+
+  .tree-parent {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 0.18rem 0.5rem;
+    border: none;
+    border-bottom: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font);
+    width: 100%;
+    text-align: left;
+    border-radius: 2px;
+    transition: color 0.1s;
+  }
+  .tree-parent:hover {
+    color: var(--text-mid);
+    border-bottom: none;
+  }
+
+  .tree-arrow {
+    font-size: 9px;
+    color: var(--text-faint);
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+  .tree-arrow.open { transform: rotate(90deg); }
+</style>
+
+<script>
+  function toggle(id: string) {
+    const el = document.getElementById(id) as HTMLElement | null;
+    const arr = document.getElementById('arr-' + id);
+    const btn = arr?.closest('button');
+    if (!el) return;
+    const isHidden = el.hidden;
+    el.hidden = !isHidden;
+    if (arr) arr.classList.toggle('open', isHidden);
+    if (btn) btn.setAttribute('aria-expanded', String(isHidden));
+  }
+  // expose for inline onclick
+  (window as any).toggle = toggle;
+</script>

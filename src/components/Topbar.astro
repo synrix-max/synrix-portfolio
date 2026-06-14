@@ -1,0 +1,60 @@
+---
+// No props needed — static nav for now.
+// Extend with Astro.url.pathname for active states later.
+---
+
+<nav class="topbar">
+  <div class="topbar-left">
+    <a href="/" class="topbar-logo">de-ignis</a>
+    <div class="topbar-nav">
+      <a href="/art">art</a>
+      <a href="/projects">projects</a>
+      <a href="/search">/search</a>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <span class="muted">~</span>
+  </div>
+</nav>
+
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .topbar-logo {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-hi);
+    border-bottom: none;
+    letter-spacing: 0.05em;
+  }
+  .topbar-logo:hover {
+    color: var(--text-hi);
+    border-bottom: none;
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 1.2rem;
+  }
+  .topbar-nav a {
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: none;
+  }
+  .topbar-nav a:hover {
+    color: var(--text);
+    border-bottom: none;
+  }
+</style>
