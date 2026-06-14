@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Geist+Mono:wght@300;400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:        #0d0d0d;
+  --surface:   #161616;
+  --border:    #1c1c1c;
+  --border-sub:#141414;
+  --text:      #c9c9c0;
+  --text-hi:   #f0ede3;
+  --text-mid:  #888;
+  --text-muted:#666;
+  --text-dim:  #555;
+  --text-faint:#444;
+  --text-ghost:#333;
+  --accent:    #e8c87a;
+  --green:     #3a7a3a;
+  --green-halo:#1a2e1a;
+  --font:      'JetBrains Mono', 'Geist Mono', monospace;
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 13px;
+  --text-md:   14px;
+}
+
+html, body {
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.15s, color 0.15s;
+}
+a:hover {
+  color: var(--text-hi);
+  border-color: #888;
+}
+
+.accent  { color: var(--accent); }
+.dim     { color: var(--text-dim); }
+.muted   { color: var(--text-muted); }
+
+/* ── layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  gap: 3rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-sub);
+  margin: 1.5rem 0;
+}
+
+/* ── tag pill ── */
+.tag {
+  font-size: 10px;
+  color: var(--text-faint);
+  background: var(--surface);
+  border: 1px solid #1f1f1f;
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+/* ── section title ── */
+.section-title {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* ── status / prompt lines ── */
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  margin-bottom: 2.5rem;
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 2px var(--green-halo);
+  animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+}
+.prompt-sym { color: var(--accent); font-size: var(--text-xs); }

@@ -1,0 +1,89 @@
+---
+interface Project {
+  name: string;
+  href: string;
+  desc: string;
+  tag?: string;        // e.g. "wip"
+}
+
+const projects: Project[] = [
+  {
+    name: "anomalyze",
+    href: "https://github.com/DE-IGNIS/anomalyze",
+    desc: "real-time fraud & anomaly detection for mobile — react native, supabase",
+    tag: "wip",
+  },
+  {
+    name: "synrix",
+    href: "https://github.com/synrix-max/synrix",
+    desc: "personal garden — notes, devlogs, journals. built on astro",
+  },
+  {
+    name: "browse-agent tools",
+    href: "https://github.com/DE-IGNIS",
+    desc: "oss contribution — double_click, right_click, hover for langchain cdp agent",
+  },
+  {
+    name: "eas ci pipeline",
+    href: "https://github.com/DE-IGNIS",
+    desc: "github actions workflow for expo / eas build & submit",
+  },
+];
+---
+
+<div class="projects-list">
+  <div class="section-title">some projects</div>
+
+  {projects.map((p) => (
+    <div class="project-item">
+      <div style="flex:1">
+        <div class="project-name">
+          <a href={p.href}>{p.name}</a>
+          {p.tag && <span class="tag" style="margin-left:0.5rem">{p.tag}</span>}
+        </div>
+        <div class="project-desc">{p.desc}</div>
+      </div>
+    </div>
+  ))}
+
+  <div style="margin-top: 0.8rem;">
+    <a href="/projects" class="see-all">see all →</a>
+  </div>
+</div>
+
+<style>
+  .projects-list { margin-bottom: 2.5rem; }
+
+  .project-item {
+    display: flex;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-sub);
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+  .project-item:last-of-type { border-bottom: none; }
+
+  .project-name a {
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+  }
+  .project-name a:hover { border-color: var(--text-dim); }
+
+  .project-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+  }
+
+  .see-all {
+    font-size: 12px;
+    color: var(--text-dim);
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .see-all:hover {
+    color: var(--text-muted);
+    border-color: var(--text-dim);
+  }
+</style>
