@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+
+// Merge blog + journal entries, sort by date, take latest 5
+const blogs   = await getCollection('blog');
+const journals = await getCollection('journal');
+
+const all = [...blogs, ...journals]
+  .sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 5);
+
+function formatDate(d: Date | string) {
+  const dt = new Date(d);
+  const yy = String(dt.getFullYear()).slice(2);
+  const mm = String(dt.getMonth() + 1).padStart(2, '0');
+  return `${yy}/${mm}`;
+}
+
+function getSlug(entry: typeof all[0]) {
+  if (entry.collection === 'blog')    return `/blog/${entry.slug}`;
+  if (entry.collection === 'journal') return `/journal/${entry.slug}`;
+  return `/${entry.collection}/${entry.slug}`;
+}
+---
+
+<div class="recent-writing">
+  <div class="section-title">recent writing</div>
+
+  <div class="writing-list">
+    {all.map((entry) => (
+      <div class="writing-row">
+        <a href={getSlug(entry)} class="writing-link">{entry.data.title}</a>
+        <span class="dim writing-date">{formatDate(entry.data.date)}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .recent-writing { margin-bottom: 2rem; }
+
+  .writing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .writing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .writing-link {
+    font-size: 13px;
+    color: var(--text-mid);
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .writing-link:hover {
+    color: var(--text);
+    border-color: var(--text-dim);
+  }
+
+  .writing-date {
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+</style>

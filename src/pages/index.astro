@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bio from '../components/Bio.astro';
+import Projects from '../components/Projects.astro';
+import RecentWriting from '../components/RecentWriting.astro';
+---
+
+<BaseLayout title="index">
+  <div class="status-line">
+    <span class="status-dot"></span>
+    <span>open to new roles</span>
+  </div>
+
+  <Bio />
+
+  <hr class="divider" />
+
+  <Projects />
+
+  <hr class="divider" />
+
+  <RecentWriting />
+
+  <div class="prompt-line">
+    <span class="prompt-sym">$</span>
+    <span class="muted">made with ❤ and insomnia</span>
+  </div>
+</BaseLayout>

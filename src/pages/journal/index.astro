@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('journal'))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+function fmtDate(d: Date | string) {
+  const dt = new Date(d);
+  const yy = String(dt.getFullYear()).slice(2);
+  const mm = String(dt.getMonth() + 1).padStart(2, '0');
+  return `${yy}/${mm}`;
+}
+---
+
+<BaseLayout title="journal">
+  <div class="section-title">journal</div>
+
+  <div class="entry-list">
+    {entries.map((e) => (
+      <div class="entry-row">
+        <a href={`/journal/${e.slug}`} class="entry-link">
+          <span class="entry-date-prefix">{fmtDate(e.data.date)}</span>
+          {e.data.title}
+        </a>
+      </div>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .entry-list { display: flex; flex-direction: column; gap: 0.1rem; }
+
+  .entry-row {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #111;
+  }
+  .entry-row:last-child { border-bottom: none; }
+
+  .entry-link {
+    font-size: 13px;
+    color: var(--text-mid);
+    border-bottom: none;
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+  .entry-link:hover { color: var(--text); }
+
+  .entry-date-prefix {
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+function fmtDate(d: Date | string) {
+  const dt = new Date(d);
+  const yy = String(dt.getFullYear()).slice(2);
+  const mm = String(dt.getMonth() + 1).padStart(2, '0');
+  return `${yy}/${mm}`;
+}
+
+// Group by category
+const grouped = posts.reduce<Record<string, typeof posts>>((acc, p) => {
+  const cat = p.data.category ?? 'uncategorised';
+  (acc[cat] ??= []).push(p);
+  return acc;
+}, {});
+---
+
+<BaseLayout title="blog">
+  <div class="section-title">blog</div>
+
+  {Object.entries(grouped).map(([cat, entries]) => (
+    <div class="cat-group">
+      <div class="cat-label">{cat}</div>
+      {entries.map((p) => (
+        <div class="post-row">
+          <a href={`/blog/${p.slug}`} class="post-link">{p.data.title}</a>
+          <span class="dim post-date">{fmtDate(p.data.date)}</span>
+        </div>
+      ))}
+    </div>
+  ))}
+</BaseLayout>
+
+<style>
+  .cat-group  { margin-bottom: 1.8rem; }
+  .cat-label  {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #111;
+  }
+  .post-row:last-child { border-bottom: none; }
+
+  .post-link {
+    font-size: 13px;
+    color: var(--text-mid);
+    border-bottom: none;
+  }
+  .post-link:hover { color: var(--text); }
+
+  .post-date { font-size: 11px; flex-shrink: 0; margin-left: 1rem; }
+</style>
